@@ -17,11 +17,9 @@ Gem::Specification.new do |s|
      "README.rdoc"
   ]
   s.files = [
-    ".gitignore",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
-     "VERSION",
      "deps.rip",
      "dev-deps.rip",
      "lib/rack/openid.rb",
