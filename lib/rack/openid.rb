@@ -235,15 +235,14 @@ module Rack #:nodoc:
       end
 
       def add_attribute_exchange_fields(oidreq, fields)
-        axreq = ::OpenID::AX::FetchRequest.new
-
         required = Array(fields['required']).select(&URL_FIELD_SELECTOR)
-        required.each { |field| axreq.add(::OpenID::AX::AttrInfo.new(field, nil, true)) }
-
         optional = Array(fields['optional']).select(&URL_FIELD_SELECTOR)
-        optional.each { |field| axreq.add(::OpenID::AX::AttrInfo.new(field, nil, false)) }
-
-        oidreq.add_extension(axreq)
+	if (required.any? || optional.any?)
+          axreq = ::OpenID::AX::FetchRequest.new
+          required.each { |field| axreq.add(::OpenID::AX::AttrInfo.new(field, nil, true)) }
+          optional.each { |field| axreq.add(::OpenID::AX::AttrInfo.new(field, nil, false)) }
+          oidreq.add_extension(axreq)
+        end
       end
 
       def add_oauth_fields(oidreq, fields)
